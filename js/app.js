@@ -1,55 +1,25 @@
-const start =() =>{
-  const addButton = document.querySelector('#add-to-list');
-  addButton.addEventListener('click',clickButton);
-}
+document.addEventListener('DOMContentLoaded',() =>{
 
-const clickButton = () =>{
-  const addButton = document.querySelector('#add-to-list');
-  addButton.classList.add('hidden');
-  addForm();
-}
+  const listContainer = document.querySelector('#flower-form');
+  listContainer.addEventListener('submit',formEventSubmit);
+  const deleteAllbutton = document.querySelector('#delete-all');
+  deleteAllbutton.addEventListener('click',deleteAllOnClick)
+})
 
-const addForm = () =>{
-  const flowerForm = newFlowerForm();
-  const listContainer = document.querySelector('#flower-container');
-  listContainer.appendChild(flowerForm);
-  flowerForm.addEventListener('submit',formEventSubmit);
-}
-
-const newFlowerForm = ()=>{
-  const name = document.createElement('input');
-  const colour = document.createElement('input');
-  const price = document.createElement('input');
-  name.type = 'text';
-  name.id = 'name-input';
-  name.label = 'Name';
-  colour.type = 'text';
-  colour.id = 'colour-input';
-  colour.label = 'Colour'
-  price.type = 'number';
-  price.id = 'price-input';
-  price.label = 'Price';
-
-  const submitFormButton = document.createElement('button');
-    submitFormButton.type = 'submit';
-    submitFormButton.textContent = 'Add to List';
-
-  const newFlowerForm = document.createElement('form');
-  newFlowerForm.appendChild(name);
-  newFlowerForm.appendChild(colour);
-  newFlowerForm.appendChild(price);
-  newFlowerForm.appendChild(submitFormButton);
-  return newFlowerForm;
-}
-
-const formEventSubmit = (event) =>{
+const formEventSubmit = function (event) {
   event.preventDefault();
-  console.log(event);
-  const name = event.target['name-input'].value;
-  const colour = event.target['colour-input'].value;
-  const price = event.target['price-input'].value;
-
+  const newItem = createNewItem(event);
   const list = document.querySelector('#list-container');
+  list.appendChild(newItem);
+  event.target.reset();
+
+}
+
+const createNewItem = function(form) {
+  const name = form.target['name-input'].value;
+  const colour = form.target['colour-input'].value;
+  const price = form.target['price-input'].value;
+  const list = document.createElement('li');
   nameParagraph = document.createElement('p');
   colourParagraph = document.createElement('p');
   priceParagraph = document.createElement('p');
@@ -59,8 +29,9 @@ const formEventSubmit = (event) =>{
   list.appendChild(nameParagraph);
   list.appendChild(colourParagraph);
   list.appendChild(priceParagraph);
-  event.target.reset()
-
+  return list;
 }
-
-document.addEventListener('DOMContentLoaded',start);
+const deleteAllOnClick = function (event) {
+  const flowerList = document.querySelector('#list-container');
+  flowerList.innerHTML = '';
+}
