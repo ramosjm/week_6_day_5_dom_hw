@@ -10,8 +10,11 @@ const formEventSubmit = function (event) {
   event.preventDefault();
   const newItem = createNewItem(event);
   const list = document.querySelector('#list-container');
+  list.classList.toggle('hidden');
   list.appendChild(newItem);
   event.target.reset();
+  deleteButton = document.querySelector('#delete-all');
+  deleteButton.classList.toggle('hidden');
 
 }
 
